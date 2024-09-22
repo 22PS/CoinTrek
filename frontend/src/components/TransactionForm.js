@@ -39,7 +39,7 @@ const TransactionForm = () => {
     if (response.ok) {
       setTitle('');
       setAmount('');
-      setType('');
+      setType('expense');
       setNote('');
       setError(null);
       setEmptyFields([]);
@@ -65,7 +65,11 @@ const TransactionForm = () => {
             type="text"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
-            className={emptyFields.includes('title') ? 'error' : ''}
+            className={
+              Array.isArray(emptyFields) && emptyFields.includes('title')
+                ? 'error'
+                : ''
+            }
           />
         </div>
         <div className="w-[75%] mt-1 mb-1">
@@ -76,7 +80,11 @@ const TransactionForm = () => {
             type="number"
             onChange={(e) => setAmount(e.target.value)}
             value={amount}
-            className={emptyFields.includes('amount') ? 'error' : ''}
+            className={
+              Array.isArray(emptyFields) && emptyFields.includes('amount')
+                ? 'error'
+                : ''
+            }
           />
         </div>
         <div className="w-[75%] mt-1 mb-1">
