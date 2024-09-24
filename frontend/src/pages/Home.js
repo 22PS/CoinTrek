@@ -38,7 +38,6 @@ const Home = () => {
     let transactionData = [0, 0, 0];
     transactions &&
       transactions.forEach((transaction) => {
-        // console.log(transaction);
         if (transaction.type === 'expense') {
           transactionData[0] += transaction.amount;
         } else if (transaction.type === 'income') {
@@ -59,7 +58,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col lg:flex-row m-5 lg:h-[80vh]">
+      <div className="flex flex-col lg:flex-row m-5 lg:h-[88vh]">
         {transactions && <TransactionChart data={data} />}
 
         <TransactionForm />
