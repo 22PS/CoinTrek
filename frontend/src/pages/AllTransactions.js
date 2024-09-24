@@ -114,7 +114,7 @@ const AllTransactions = () => {
         <p>Loading...</p>
       ) : (
         <div className="flex flex-col lg:flex-row m-6">
-          <div className="flex flex-col lg:w-[25vw] lg:mt-[22px] ml-9 mr-[-24px] lg:m-0 lg:ml-1">
+          <div className="flex flex-col lg:w-[25vw] lg:mt-[22px] ml-9 mr-[-24px] lg:m-0 lg:ml-5 lg:h-[27vw] sticky top-0 z-10 bg-[#f1f1f1]">
             <div>
               <h2 className="font-semibold text-[20px] mt-3 mb-5 text-center lg:text-left">
                 Filters
@@ -156,9 +156,9 @@ const AllTransactions = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="lg:w-[56%]">
                 <h3 className="font-medium text-[18px] mb-2">Amount Range</h3>
-                <div className="mt-6">
+                <div className="mt-6 ">
                   <div className="range-slider">
                     <span className="range-selected" ref={sliderRef}></span>
                   </div>
@@ -228,7 +228,7 @@ const AllTransactions = () => {
           </div>
 
           <div className="grid grid-cols-1 mt-3 mb-3 w-[75vw] lg:w-[50vw] ml-auto mr-auto">
-            <div className="flex p-5 relative">
+            <div className="flex p-5 sticky top-[150px] lg:top-0 z-10 bg-[#f1f1f1]">
               <div className="flex w-[100%] h-10 bg-white rounded-lg rounded-l-xl">
                 <input
                   type="text"
