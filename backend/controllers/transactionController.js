@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const createTransaction = async (req, res) => {
   const { title, amount, type, note } = req.body;
 
+  if (amount < 0) {
+    return res.status(400).json({ error: "Amount can't be negative!" });
+  }
+
   let emptyFields = [];
   if (!title) emptyFields.push('title');
   if (!amount) emptyFields.push('amount');
@@ -13,6 +17,7 @@ const createTransaction = async (req, res) => {
       .status(400)
       .json({ error: 'Please fill in all the fields', emptyFields });
   }
+
   try {
     const user_id = req.user._id;
     const transaction = await Transaction.create({
