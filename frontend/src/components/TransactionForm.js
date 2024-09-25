@@ -78,7 +78,13 @@ const TransactionForm = () => {
           </label>
           <input
             type="number"
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              if (e.target.value < 0) {
+                setAmount(0);
+              } else {
+                setAmount(e.target.value);
+              }
+            }}
             value={amount}
             className={
               Array.isArray(emptyFields) && emptyFields.includes('amount')
