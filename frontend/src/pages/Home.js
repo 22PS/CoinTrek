@@ -8,10 +8,10 @@ import TransactionForm from '../components/TransactionForm.js';
 import TransactionChart from '../components/TransactionChart';
 
 const Home = () => {
-  const { transactions, dispatch } = useTransactionsContext();
   const { user } = useAuthContext();
+  const { transactions, dispatch } = useTransactionsContext();
   const [data, setData] = useState([0, 0, 0]);
-  const [recentTransactions, setRecentTransactions] = useState();
+  const [recentTransactions, setRecentTransactions] = useState(null);
 
   const navigate = useNavigate();
 
@@ -36,6 +36,7 @@ const Home = () => {
 
   useEffect(() => {
     let transactionData = [0, 0, 0];
+
     transactions &&
       transactions.forEach((transaction) => {
         if (transaction.type === 'expense') {
@@ -47,7 +48,7 @@ const Home = () => {
         }
       });
 
-    console.log(transactions);
+    // console.log(transactions);
     let recentData =
       transactions &&
       transactions.slice(0, transactions.length > 6 ? 6 : transactions.length);
@@ -60,7 +61,6 @@ const Home = () => {
     <div className="flex flex-col">
       <div className="flex flex-col lg:flex-row m-5 lg:h-[88vh]">
         {transactions && <TransactionChart data={data} />}
-
         <TransactionForm />
       </div>
 

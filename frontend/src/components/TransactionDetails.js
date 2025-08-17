@@ -56,7 +56,7 @@ const TransactionDetails = ({ transaction }) => {
       )}
 
       <p>
-        {formatDistanceToNow(new Date(transaction.createdAt), {
+        {formatDistanceToNow(new Date(transaction.updatedAt), {
           addSuffix: true,
         })}
       </p>

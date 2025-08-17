@@ -3,9 +3,6 @@ import { GoSearch } from 'react-icons/go';
 import TransactionDetails from '../components/TransactionDetails';
 import { useAuthContext } from '../hooks/useAuthContext.js';
 import { useTransactionsContext } from '../hooks/useTransactionsContext.js';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
 const AllTransactions = () => {
   const { transactions, dispatch } = useTransactionsContext();
   const { user } = useAuthContext();
@@ -19,7 +16,7 @@ const AllTransactions = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const currentDate = new Date();
+  const currentDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -79,9 +76,16 @@ const AllTransactions = () => {
             transaction.amount <= amountRange[1]
         )
         .filter((transaction) => {
-          const transactionDate = new Date(transaction.createdAt);
+          const transactionDate = new Date(transaction.updatedAt)
+            .toISOString()
+            .split('T')[0];
+
           if (startDate && endDate) {
             return transactionDate >= startDate && transactionDate <= endDate;
+          } else if (startDate) {
+            return transactionDate >= startDate;
+          } else if (endDate) {
+            return transactionDate <= endDate;
           }
           return true;
         });
@@ -96,6 +100,7 @@ const AllTransactions = () => {
     startDate,
     endDate,
   ]);
+
   const sliderRef = useRef(null);
 
   useEffect(() => {
@@ -198,29 +203,29 @@ const AllTransactions = () => {
               <div>
                 <h3 className="font-medium text-[18px] mb-2">Date Range</h3>
                 <div className="w-[70%] ">
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    dateFormat="dd/MM/YYYY"
-                    placeholderText="Start Date"
+                  <input
+                    type="date"
+                    value={startDate ? startDate : ''}
+                    max={endDate ? endDate : currentDate}
+                    onChange={(e) =>
+                      setStartDate(
+                        new Date(e.target.value).toISOString().split('T')[0]
+                      )
+                    }
                     className="w-[100%] rounded-[4px] pl-1"
                   />
-                </div>
-                <div className="mt-2 w-[70%]">
-                  <DatePicker
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    maxDate={currentDate}
-                    dateFormat="dd/MM/YYYY"
-                    placeholderText="End Date"
-                    className="w-[100%] rounded-[4px] pl-1"
+
+                  <input
+                    type="date"
+                    value={endDate ? endDate : ''}
+                    min={startDate ? startDate : ''}
+                    max={currentDate}
+                    onChange={(e) =>
+                      setEndDate(
+                        new Date(e.target.value).toISOString().split('T')[0]
+                      )
+                    }
+                    className="w-[100%] mt-2 rounded-[4px] pl-1"
                   />
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react';
 
-export const TransactionsContext = createContext();
+export const TransactionsContext = createContext(null);
 
 export const transactionsReducer = (state, action) => {
   switch (action.type) {
@@ -15,7 +15,7 @@ export const transactionsReducer = (state, action) => {
     case 'DELETE_TRANSACTION':
       return {
         transactions: state.transactions.filter(
-          (w) => w._id !== action.payload._id
+          (t) => t._id !== action.payload._id
         ),
       };
     default:
